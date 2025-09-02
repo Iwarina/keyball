@@ -18,9 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include "quantum.h"
 
-/////////////////////////////
-/// miniZoneの実装 ここから ///
-////////////////////////////
+/// miniZone start ///
 
 enum custom_keycodes
 {
@@ -394,9 +392,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report)
     return mouse_report;
 }
 
-/////////////////////////////
-/// miniZoneの実装 ここまで ///
-////////////////////////////
+/// miniZone end ///
 
 #ifdef OLED_ENABLE
 
@@ -456,12 +452,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef COMBO_ENABLE
 
-// ===== ここからがテストコード =====
-// 機能：QとWの同時押しで「X」を入力する
 const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(qw_combo, KC_X)};
-// ===== ここまでがテストコード =====
 
 #endif
