@@ -465,28 +465,3 @@ combo_t key_combos[] = {
 // ===== ここまでがテストコード =====
 
 #endif
-
-/*
-#ifdef COMBO_ENABLE
-
-// コンボに名前を付けて管理しやすくします
-enum combos
-{
-    DF_EISU,
-    JK_KANA
-};
-
-// DF同時押しの定義
-const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
-// JK同時押しの定義
-const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
-
-// コンボと対応するキーコードを紐付けます
-combo_t key_combos[] = {
-    // DF同時押しで「英数」を入力
-    [DF_EISU] = COMBO(df_combo, KC_LANG2),
-    // JK同時押しで「かな」を入力
-    [JK_KANA] = COMBO(jk_combo, KC_LANG1)};
-
-#endif
-*/
