@@ -142,6 +142,11 @@ bool is_clickable_mode(void)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
 
+    if (!process_combo_event(keycode, record))
+    {
+        return false;
+    }
+
     switch (keycode)
     {
     case KC_MY_BTN1:
