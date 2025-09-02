@@ -142,10 +142,7 @@ bool is_clickable_mode(void)
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
 
-    if (!process_combo_event(keycode, record))
-    {
-        return false;
-    }
+    process_combo_event(keycode, record);
 
     switch (keycode)
     {
@@ -456,18 +453,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
 };
-
-#ifdef OLED_ENABLE
-
-#include "lib/oledkit/oledkit.h"
-
-void oledkit_render_info_user(void)
-{
-    keyball_oled_render_keyinfo();
-    keyball_oled_render_ballinfo();
-    keyball_oled_render_layerinfo();
-}
-#endif
 
 #ifdef COMBO_ENABLE
 
