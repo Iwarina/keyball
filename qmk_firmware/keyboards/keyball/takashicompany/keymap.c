@@ -61,7 +61,7 @@ enum click_state state; // 現在のクリック入力受付の状態 Current cl
 uint16_t click_timer;   // タイマー。状態に応じて時間で判定する。 Timer. Time to determine the state of the system.
 
 // uint16_t to_clickable_time = 50;   // この秒数(千分の一秒)、WAITING状態ならクリックレイヤーが有効になる。  For this number of seconds (milliseconds), if in WAITING state, the click layer is activated.
-uint16_t to_reset_time = 1000; // この秒数(千分の一秒)、CLICKABLE状態ならクリックレイヤーが無効になる。 For this number of seconds (milliseconds), the click layer is disabled if in CLICKABLE state.
+uint16_t to_reset_time = 700; // この秒数(千分の一秒)、CLICKABLE状態ならクリックレイヤーが無効になる。 For this number of seconds (milliseconds), the click layer is disabled if in CLICKABLE state.
 
 const uint16_t click_layer = 4; // マウス入力が可能になった際に有効になるレイヤー。Layers enabled when mouse input is enabled
 
@@ -466,6 +466,19 @@ void oledkit_render_info_user(void)
 
 #ifdef COMBO_ENABLE
 
+// ===== ここからがテストコード =====
+// 機能：QとWの同時押しで「X」を入力する
+const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(qw_combo, KC_X)};
+// ===== ここまでがテストコード =====
+
+#endif
+
+/*
+#ifdef COMBO_ENABLE
+
 // コンボに名前を付けて管理しやすくします
 enum combos
 {
@@ -486,3 +499,4 @@ combo_t key_combos[] = {
     [JK_KANA] = COMBO(jk_combo, KC_LANG1)};
 
 #endif
+*/
