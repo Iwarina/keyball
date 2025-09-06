@@ -458,7 +458,18 @@ enum {
   JK_LNG1,
   CV_MINS,
   MC_UNDS,
-  QW_X
+  QW_X,
+  ESC_COMBO,
+  TAB_COMBO,
+  CAPSLOCK_COMBO,
+  EQ_COMBO,
+  BACKSLASH_COMBO,
+  APOS_COMBO,
+  BACKQUOTE_COMBO,
+  LANG1_COMBO,
+  LANG2_COMBO,
+  HYPHEN_COMBO,
+  UNDERSCORE_COMBO
 };
 
 const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
@@ -467,12 +478,36 @@ const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM mcomm_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
 
+// roBa combos
+const uint16_t PROGMEM esc_combo[] = {KC_W, KC_Q, COMBO_END}; // roBa: <1 0> -> W, Q
+const uint16_t PROGMEM tab_combo[] = {KC_S, KC_A, COMBO_END}; // roBa: <11 10> -> S, A
+const uint16_t PROGMEM capslock_combo[] = {KC_V, KC_C, COMBO_END}; // roBa: <23 22> -> V, C
+const uint16_t PROGMEM eq_combo[] = {KC_P, KC_O, KC_I, COMBO_END}; // roBa: <8 9 7> -> P, O, I
+const uint16_t PROGMEM backslash_combo[] = {KC_P, KC_O, COMBO_END}; // roBa: <8 9> -> P, O
+const uint16_t PROGMEM apos_combo[] = {KC_Z, KC_X, COMBO_END}; // roBa: <20 21> -> Z, X
+const uint16_t PROGMEM backquote_combo[] = {KC_LALT, KC_LCTL, COMBO_END}; // roBa: <33 32> -> LALT, LCTL
+const uint16_t PROGMEM lang1_combo[] = {KC_L, KC_SCLN, COMBO_END}; // roBa: <18 19> -> L, SCLN
+const uint16_t PROGMEM lang2_combo[] = {KC_F, KC_D, COMBO_END}; // roBa: <13 12> -> F, D
+const uint16_t PROGMEM hyphen_combo[] = {KC_LBRC, KC_B, COMBO_END}; // roBa: <25 24> -> LBRC, B
+const uint16_t PROGMEM underscore_combo[] = {KC_SLSH, KC_DOT, COMBO_END}; // roBa: <30 31> -> SLSH, DOT
+
 combo_t key_combos[] = {
     [DF_LNG2] = COMBO(df_combo, KC_LNG2),
     [JK_LNG1] = COMBO(jk_combo, KC_LNG1),
     [CV_MINS] = COMBO(cv_combo, KC_MINS),
     [MC_UNDS] = COMBO(mcomm_combo, KC_UNDS),
     [QW_X] = COMBO(qw_combo, KC_X),
+    [ESC_COMBO] = COMBO(esc_combo, KC_ESCAPE),
+    [TAB_COMBO] = COMBO(tab_combo, KC_TAB),
+    [CAPSLOCK_COMBO] = COMBO(capslock_combo, KC_CAPSLOCK),
+    [EQ_COMBO] = COMBO(eq_combo, KC_EQUAL),
+    [BACKSLASH_COMBO] = COMBO(backslash_combo, KC_BSLS),
+    [APOS_COMBO] = COMBO(apos_combo, KC_QUOT),
+    [BACKQUOTE_COMBO] = COMBO(backquote_combo, KC_GRAVE),
+    [LANG1_COMBO] = COMBO(lang1_combo, KC_LANG1),
+    [LANG2_COMBO] = COMBO(lang2_combo, KC_LANG2),
+    [HYPHEN_COMBO] = COMBO(hyphen_combo, KC_MINS),
+    [UNDERSCORE_COMBO] = COMBO(underscore_combo, KC_UNDS)
 };
 
 #endif
