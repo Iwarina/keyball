@@ -499,13 +499,13 @@ combo_t key_combos[] = {
     [QW_X] = COMBO(qw_combo, KC_X),
     [ESC_COMBO] = COMBO(esc_combo, KC_ESCAPE),
     [TAB_COMBO] = COMBO(tab_combo, KC_TAB),
-    [CAPSLOCK_COMBO] = COMBO(capslock_combo, KC_CAPSLOCK),
+    [CAPSLOCK_COMBO] = COMBO(capslock_combo, KC_CAPS_LOCK),
     [EQ_COMBO] = COMBO(eq_combo, KC_EQUAL),
     [BACKSLASH_COMBO] = COMBO(backslash_combo, KC_BSLS),
     [APOS_COMBO] = COMBO(apos_combo, KC_QUOT),
     [BACKQUOTE_COMBO] = COMBO(backquote_combo, KC_GRAVE),
-    [LANG1_COMBO] = COMBO(lang1_combo, KC_LANG1),
-    [LANG2_COMBO] = COMBO(lang2_combo, KC_LANG2),
+    [LANG1_COMBO] = COMBO(lang1_combo, KC_LNG1),
+    [LANG2_COMBO] = COMBO(lang2_combo, KC_LNG2),
     [HYPHEN_COMBO] = COMBO(hyphen_combo, KC_MINS),
     [UNDERSCORE_COMBO] = COMBO(underscore_combo, KC_UNDS)
 };
