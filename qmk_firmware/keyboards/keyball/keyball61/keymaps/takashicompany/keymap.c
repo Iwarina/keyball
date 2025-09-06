@@ -452,9 +452,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef COMBO_ENABLE
 
+// Enum for combo actions
+enum {
+  DF_LNG2,
+  JK_LNG1,
+  CV_MINS,
+  MC_UNDS,
+  QW_X
+};
+
+const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM mcomm_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(qw_combo, KC_X)};
+    [DF_LNG2] = COMBO(df_combo, KC_LNG2),
+    [JK_LNG1] = COMBO(jk_combo, KC_LNG1),
+    [CV_MINS] = COMBO(cv_combo, KC_MINS),
+    [MC_UNDS] = COMBO(mcomm_combo, KC_UNDS),
+    [QW_X] = COMBO(qw_combo, KC_X),
+};
 
 #endif
