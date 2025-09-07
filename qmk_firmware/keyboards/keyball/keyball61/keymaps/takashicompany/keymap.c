@@ -452,62 +452,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef COMBO_ENABLE
 
-// Enum for combo actions
-enum {
-  DF_LNG2,
-  JK_LNG1,
-  CV_MINS,
-  MC_UNDS,
-  QW_X,
-  ESC_COMBO,
-  TAB_COMBO,
-  CAPSLOCK_COMBO,
-  EQ_COMBO,
-  BACKSLASH_COMBO,
-  APOS_COMBO,
-  BACKQUOTE_COMBO,
-  LANG1_COMBO,
-  LANG2_COMBO,
-  HYPHEN_COMBO,
-  UNDERSCORE_COMBO
-};
-
-const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM mcomm_combo[] = {KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
-
-// roBa combos
-const uint16_t PROGMEM esc_combo[] = {KC_W, KC_Q, COMBO_END}; // roBa: <1 0> -> W, Q
-const uint16_t PROGMEM tab_combo[] = {KC_S, KC_A, COMBO_END}; // roBa: <11 10> -> S, A
-const uint16_t PROGMEM capslock_combo[] = {KC_V, KC_C, COMBO_END}; // roBa: <23 22> -> V, C
-const uint16_t PROGMEM eq_combo[] = {KC_P, KC_O, KC_I, COMBO_END}; // roBa: <8 9 7> -> P, O, I
-const uint16_t PROGMEM backslash_combo[] = {KC_P, KC_O, COMBO_END}; // roBa: <8 9> -> P, O
-const uint16_t PROGMEM apos_combo[] = {KC_Z, KC_X, COMBO_END}; // roBa: <20 21> -> Z, X
-const uint16_t PROGMEM backquote_combo[] = {KC_LALT, KC_LCTL, COMBO_END}; // roBa: <33 32> -> LALT, LCTL
-const uint16_t PROGMEM lang1_combo[] = {KC_L, KC_SCLN, COMBO_END}; // roBa: <18 19> -> L, SCLN
-const uint16_t PROGMEM lang2_combo[] = {KC_F, KC_D, COMBO_END}; // roBa: <13 12> -> F, D
-const uint16_t PROGMEM hyphen_combo[] = {KC_LBRC, KC_B, COMBO_END}; // roBa: <25 24> -> LBRC, B
-const uint16_t PROGMEM underscore_combo[] = {KC_SLSH, KC_DOT, COMBO_END}; // roBa: <30 31> -> SLSH, DOT
-
+// 可読性向上のため、コンボの定義を直接 `key_combos` 配列内で行います。
+// これにより、enum や個別の `PROGMEM` 配列が不要になります。
+// For improved readability, combo definitions are made directly in the `key_combos` array.
+// This eliminates the need for enums and individual `PROGMEM` arrays.
 combo_t key_combos[] = {
-    [DF_LNG2] = COMBO(df_combo, KC_LNG2),
-    [JK_LNG1] = COMBO(jk_combo, KC_LNG1),
-    [CV_MINS] = COMBO(cv_combo, KC_MINS),
-    [MC_UNDS] = COMBO(mcomm_combo, KC_UNDS),
-    [QW_X] = COMBO(qw_combo, KC_X),
-    [ESC_COMBO] = COMBO(esc_combo, KC_ESCAPE),
-    [TAB_COMBO] = COMBO(tab_combo, KC_TAB),
-    [CAPSLOCK_COMBO] = COMBO(capslock_combo, KC_CAPS_LOCK),
-    [EQ_COMBO] = COMBO(eq_combo, KC_EQUAL),
-    [BACKSLASH_COMBO] = COMBO(backslash_combo, KC_BSLS),
-    [APOS_COMBO] = COMBO(apos_combo, KC_QUOT),
-    [BACKQUOTE_COMBO] = COMBO(backquote_combo, KC_GRAVE),
-    [LANG1_COMBO] = COMBO(lang1_combo, KC_LNG1),
-    [LANG2_COMBO] = COMBO(lang2_combo, KC_LNG2),
-    [HYPHEN_COMBO] = COMBO(hyphen_combo, KC_MINS),
-    [UNDERSCORE_COMBO] = COMBO(underscore_combo, KC_UNDS)
-};
+    COMBO((uint16_t[]){KC_D, KC_F, COMBO_END}, KC_LNG2),
+    COMBO((uint16_t[]){KC_J, KC_K, COMBO_END}, KC_LNG1),
+    COMBO((uint16_t[]){KC_C, KC_V, COMBO_END}, KC_MINUS),
+    COMBO((uint16_t[]){KC_M, KC_COMM, COMBO_END}, KC_UNDS),
+    // roBa combos
+    COMBO((uint16_t[]){KC_W, KC_Q, COMBO_END}, KC_ESCAPE),
+    COMBO((uint16_t[]){KC_S, KC_A, COMBO_END}, KC_TAB),
+    COMBO((uint16_t[]){KC_P, KC_O, KC_I, COMBO_END}, KC_EQUAL),
+    COMBO((uint16_t[]){KC_P, KC_O, COMBO_END}, KC_BSLS),
+    COMBO((uint16_t[]){KC_L, KC_SEMICOLON, COMBO_END}, KC_QUOT),
+    COMBO((uint16_t[]){KC_DOT, KC_SLASH, COMBO_END}, KC_GRAVE),
+    COMBO((uint16_t[]){KC_L, KC_SCLN, COMBO_END}, KC_LNG1)};
 
 #endif
