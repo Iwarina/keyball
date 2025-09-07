@@ -452,22 +452,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef COMBO_ENABLE
 
-// 可読性向上のため、コンボの定義を直接 `key_combos` 配列内で行います。
-// これにより、enum や個別の `PROGMEM` 配列が不要になります。
-// For improved readability, combo definitions are made directly in the `key_combos` array.
-// This eliminates the need for enums and individual `PROGMEM` arrays.
+// Enum for combo actions
+enum {
+  DF_LNG2,
+  JK_LNG1,
+  CV_MINS,
+  MC_UNDS,
+  WQ_ESC,
+  SA_TAB,
+  POI_EQL,
+  PO_BSLS,
+  LS_QUOT,
+  DS_GRV,
+  LS_LNG1
+};
+
+const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM mc_combo[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM wq_esc_combo[] = {KC_W, KC_Q, COMBO_END};
+const uint16_t PROGMEM sa_tab_combo[] = {KC_S, KC_A, COMBO_END};
+const uint16_t PROGMEM poi_eql_combo[] = {KC_P, KC_O, KC_I, COMBO_END};
+const uint16_t PROGMEM po_bsls_combo[] = {KC_P, KC_O, COMBO_END};
+const uint16_t PROGMEM ls_quot_combo[] = {KC_L, KC_SEMICOLON, COMBO_END};
+const uint16_t PROGMEM ds_grv_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
+const uint16_t PROGMEM ls_lng1_combo[] = {KC_L, KC_SCLN, COMBO_END};
+
 combo_t key_combos[] = {
-    COMBO((uint16_t[]){KC_D, KC_F, COMBO_END}, KC_LNG2),
-    COMBO((uint16_t[]){KC_J, KC_K, COMBO_END}, KC_LNG1),
-    COMBO((uint16_t[]){KC_C, KC_V, COMBO_END}, KC_MINUS),
-    COMBO((uint16_t[]){KC_M, KC_COMM, COMBO_END}, KC_UNDS),
-    // roBa combos
-    COMBO((uint16_t[]){KC_W, KC_Q, COMBO_END}, KC_ESCAPE),
-    COMBO((uint16_t[]){KC_S, KC_A, COMBO_END}, KC_TAB),
-    COMBO((uint16_t[]){KC_P, KC_O, KC_I, COMBO_END}, KC_EQUAL),
-    COMBO((uint16_t[]){KC_P, KC_O, COMBO_END}, KC_BSLS),
-    COMBO((uint16_t[]){KC_L, KC_SEMICOLON, COMBO_END}, KC_QUOT),
-    COMBO((uint16_t[]){KC_DOT, KC_SLASH, COMBO_END}, KC_GRAVE),
-    COMBO((uint16_t[]){KC_L, KC_SCLN, COMBO_END}, KC_LNG1)};
+    [DF_LNG2] = COMBO(df_combo, KC_LNG2),
+    [JK_LNG1] = COMBO(jk_combo, KC_LNG1),
+    [CV_MINS] = COMBO(cv_combo, KC_MINUS),
+    [MC_UNDS] = COMBO(mc_combo, KC_UNDS),
+    [WQ_ESC] = COMBO(wq_esc_combo, KC_ESCAPE),
+    [SA_TAB] = COMBO(sa_tab_combo, KC_TAB),
+    [POI_EQL] = COMBO(poi_eql_combo, KC_EQUAL),
+    [PO_BSLS] = COMBO(po_bsls_combo, KC_BSLS),
+    [LS_QUOT] = COMBO(ls_quot_combo, KC_QUOT),
+    [DS_GRV] = COMBO(ds_grv_combo, KC_GRAVE),
+    [LS_LNG1] = COMBO(ls_lng1_combo, KC_LNG1),
+};
 
 #endif
