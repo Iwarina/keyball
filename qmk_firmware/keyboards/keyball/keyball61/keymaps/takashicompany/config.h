@@ -35,6 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAP_CODE_DELAY 5
 #define DYNAMIC_KEYMAP_LAYER_COUNT 6
+#define DYNAMIC_KEYMAP_MACRO_COUNT 8
 #define LAYER_STATE_8BIT
 #define COMBO_TERM 80
 #define NO_MUSIC_MODE
