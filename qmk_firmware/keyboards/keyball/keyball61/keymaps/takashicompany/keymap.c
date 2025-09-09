@@ -478,16 +478,17 @@ combo_t key_combos[] = {
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record)
 {
-    // The "P, O, I" combo is the 7th one in the array, so its index is 6.
-    if (combo_index == 6)
-    {
-        if (layer_state_is(1))
-        {
-            return true;
-        }
-        return false;
+    // Combos with index 0-3 are always active.
+    if (combo_index <= 3) {
+        return true;
     }
-    return true;
+
+    // All other combos (index 4 and up) are only active on layer 1.
+    if (layer_state_is(1)) {
+        return true;
+    }
+
+    return false;
 }
 
 #endif
