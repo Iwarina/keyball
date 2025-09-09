@@ -457,7 +457,7 @@ const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM mc_combo[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM wq_combo[] = {KC_W, KC_Q, COMBO_END};
-const uint16_t PROGMEM sa_combo[] = {KC_S, KC_A, COMBO_END};
+const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM poi_combo[] = {KC_P, KC_O, KC_I, COMBO_END};
 const uint16_t PROGMEM po_combo[] = {KC_P, KC_O, COMBO_END};
 const uint16_t PROGMEM ls_combo[] = {KC_L, KC_SEMICOLON, COMBO_END};
@@ -469,17 +469,20 @@ combo_t key_combos[] = {
     COMBO(cv_combo, KC_MINUS),
     COMBO(mc_combo, KC_UNDS),
     COMBO(wq_combo, KC_ESCAPE),
-    COMBO(sa_combo, KC_TAB),
+    COMBO(sd_combo, KC_TAB),
     COMBO(poi_combo, KC_EQUAL),
     COMBO(po_combo, KC_BSLS),
     COMBO(ls_combo, KC_QUOT),
     COMBO(ds_combo, KC_GRAVE),
 };
 
-bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record)
+{
     // The "P, O, I" combo is the 7th one in the array, so its index is 6.
-    if (combo_index == 6) {
-        if (layer_state_is(1)) {
+    if (combo_index == 6)
+    {
+        if (layer_state_is(1))
+        {
             return true;
         }
         return false;
