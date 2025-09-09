@@ -451,23 +451,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 #ifdef COMBO_ENABLE
 
-            // 可読性向上のため、コンボの定義を直接 `key_combos` 配列内で行います。
-            // これにより、enum や個別の `PROGMEM` 配列が不要になります。
-            // For improved readability, combo definitions are made directly in the `key_combos` array.
-            // This eliminates the need for enums and individual `PROGMEM` arrays.
-            combo_t key_combos[] = {
-                COMBO((uint16_t[]){KC_D, KC_F, COMBO_END}, KC_LNG2),
-                COMBO((uint16_t[]){KC_J, KC_K, COMBO_END}, KC_LNG1),
-                COMBO((uint16_t[]){KC_C, KC_V, COMBO_END}, KC_MINUS),
-                COMBO((uint16_t[]){KC_M, KC_COMM, COMBO_END}, KC_UNDS),
-                // roBa combos
-                COMBO((uint16_t[]){KC_W, KC_Q, COMBO_END}, KC_ESCAPE),
-                COMBO((uint16_t[]){KC_S, KC_A, COMBO_END}, KC_TAB),
-                COMBO((uint16_t[]){KC_P, KC_O, KC_I, COMBO_END}, KC_EQUAL),
-                COMBO((uint16_t[]){KC_P, KC_O, COMBO_END}, KC_BSLS),
-                COMBO((uint16_t[]){KC_L, KC_SEMICOLON, COMBO_END}, KC_QUOT),
-                COMBO((uint16_t[]){KC_DOT, KC_SLASH, COMBO_END}, KC_GRAVE),
-            };
+// Define combo sequences in PROGMEM arrays
+const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM cv_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM mc_combo[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM wq_combo[] = {KC_W, KC_Q, COMBO_END};
+const uint16_t PROGMEM sa_combo[] = {KC_S, KC_A, COMBO_END};
+const uint16_t PROGMEM poi_combo[] = {KC_P, KC_O, KC_I, COMBO_END};
+const uint16_t PROGMEM po_combo[] = {KC_P, KC_O, COMBO_END};
+const uint16_t PROGMEM ls_combo[] = {KC_L, KC_SEMICOLON, COMBO_END};
+const uint16_t PROGMEM ds_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(df_combo, KC_LNG2),
+    COMBO(jk_combo, KC_LNG1),
+    COMBO(cv_combo, KC_MINUS),
+    COMBO(mc_combo, KC_UNDS),
+    COMBO(wq_combo, KC_ESCAPE),
+    COMBO(sa_combo, KC_TAB),
+    COMBO(poi_combo, KC_EQUAL),
+    COMBO(po_combo, KC_BSLS),
+    COMBO(ls_combo, KC_QUOT),
+    COMBO(ds_combo, KC_GRAVE),
+};
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     // The "P, O, I" combo is the 7th one in the array, so its index is 6.
