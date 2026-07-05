@@ -51,6 +51,14 @@ jobs:
             "if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):  # <number>\n        return node.value",
         )
         path.write_text(text)
+
+        path = Path("__qmk__/quantum/dynamic_keymap.c")
+        text = path.read_text()
+        text = text.replace(
+            '_Static_assert((DYNAMIC_KEYMAP_EEPROM_MAX_ADDR) - (DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR) >= 100, "Dynamic keymaps are configured to use more EEPROM than is available.");',
+            '#if DYNAMIC_KEYMAP_MACRO_COUNT > 0\n_Static_assert((DYNAMIC_KEYMAP_EEPROM_MAX_ADDR) - (DYNAMIC_KEYMAP_MACRO_EEPROM_ADDR) >= 100, "Dynamic keymaps are configured to use more EEPROM than is available.");\n#endif',
+        )
+        path.write_text(text)
         PY
 
     - name: Compile and link
