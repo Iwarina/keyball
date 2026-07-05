@@ -30,6 +30,7 @@ enum custom_keycodes
     KC_TO_CLICKABLE_DEC,
     KC_SCROLL_DIR_V,
     KC_SCROLL_DIR_H,
+    KC_GAME,
 };
 
 enum click_state
@@ -59,7 +60,7 @@ enum click_state state; // 現在のクリック入力受付の状態 Current cl
 uint16_t click_timer;   // タイマー。状態に応じて時間で判定する。 Timer. Time to determine the state of the system.
 
 // uint16_t to_clickable_time = 50;   // この秒数(千分の一秒)、WAITING状態ならクリックレイヤーが有効になる。  For this number of seconds (milliseconds), if in WAITING state, the click layer is activated.
-uint16_t to_reset_time = 850; // この秒数(千分の一秒)、CLICKABLE状態ならクリックレイヤーが無効になる。 For this number of seconds (milliseconds), the click layer is disabled if in CLICKABLE state.
+uint16_t to_reset_time = 1000; // この秒数(千分の一秒)、CLICKABLE状態ならクリックレイヤーが無効になる。 For this number of seconds (milliseconds), the click layer is disabled if in CLICKABLE state.
 
 const uint16_t click_layer = 4; // マウス入力が可能になった際に有効になるレイヤー。Layers enabled when mouse input is enabled
 
@@ -77,6 +78,49 @@ int16_t mouse_move_count_ratio = 5;  // ポインターの動きを再生する�
 const uint16_t ignore_disable_mouse_layer_keys[] = {KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT, KC_RGUI, KC_RCTL, KC_RALT, KC_RSFT}; // この配列で指定されたキーはマウスレイヤー中に押下してもマウスレイヤーを解除しない
 
 int16_t mouse_movement;
+bool game_mode;
+
+bool process_game_mode_key(uint16_t keycode, keyrecord_t *record)
+{
+    if (!game_mode)
+    {
+        return true;
+    }
+
+    uint16_t replacement = KC_NO;
+
+    switch (keycode)
+    {
+    case MO(1):
+        replacement = KC_LSFT;
+        break;
+    case LT(1, KC_LNG2):
+        replacement = KC_LNG2;
+        break;
+    case LT(2, KC_SPC):
+        replacement = KC_SPC;
+        break;
+    case LT(3, KC_LNG1):
+        replacement = KC_LNG1;
+        break;
+    case LT(2, KC_ENT):
+        replacement = KC_ENT;
+        break;
+    default:
+        return true;
+    }
+
+    if (record->event.pressed)
+    {
+        register_code16(replacement);
+    }
+    else
+    {
+        unregister_code16(replacement);
+    }
+
+    return false;
+}
 
 void eeconfig_init_user(void)
 {
@@ -141,6 +185,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
 
     process_combo_event(keycode, record);
+
+    if (keycode == KC_GAME)
+    {
+        if (record->event.pressed)
+        {
+            game_mode = !game_mode;
+            clear_keyboard();
+        }
+        return false;
+    }
+
+    if (!process_game_mode_key(keycode, record))
+    {
+        return false;
+    }
 
     switch (keycode)
     {
@@ -447,9 +506,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, KC_MY_BTN2, KC_MY_SCR, KC_MY_BTN1, _______, _______, KC_MY_BTN1, KC_MY_SCR, KC_MY_BTN2, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)
-};
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)};
 #ifdef COMBO_ENABLE
+
+enum combo_names
+{
+    DF_COMBO,
+    JK_COMBO,
+    CV_COMBO,
+    MC_COMBO,
+    WQ_COMBO,
+    SD_COMBO,
+    POI_COMBO,
+    PO_COMBO,
+    LS_COMBO,
+    DS_COMBO,
+    GAME_MODE_COMBO,
+};
 
 // Define combo sequences in PROGMEM arrays
 const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
@@ -462,29 +535,32 @@ const uint16_t PROGMEM poi_combo[] = {KC_P, KC_O, KC_I, COMBO_END};
 const uint16_t PROGMEM po_combo[] = {KC_P, KC_O, COMBO_END};
 const uint16_t PROGMEM ls_combo[] = {KC_L, KC_SEMICOLON, COMBO_END};
 const uint16_t PROGMEM ds_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
+const uint16_t PROGMEM game_mode_combo[] = {KC_LCTL, KC_LALT, KC_LGUI, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(df_combo, KC_LNG2),
-    COMBO(jk_combo, KC_LNG1),
-    COMBO(cv_combo, KC_MINUS),
-    COMBO(mc_combo, KC_UNDS),
-    COMBO(wq_combo, KC_ESCAPE),
-    COMBO(sd_combo, KC_TAB),
-    COMBO(poi_combo, KC_EQUAL),
-    COMBO(po_combo, KC_BSLS),
-    COMBO(ls_combo, KC_QUOT),
-    COMBO(ds_combo, KC_GRAVE),
+    [DF_COMBO] = COMBO(df_combo, KC_LNG2),
+    [JK_COMBO] = COMBO(jk_combo, KC_LNG1),
+    [CV_COMBO] = COMBO(cv_combo, KC_MINUS),
+    [MC_COMBO] = COMBO(mc_combo, KC_UNDS),
+    [WQ_COMBO] = COMBO(wq_combo, KC_ESCAPE),
+    [SD_COMBO] = COMBO(sd_combo, KC_TAB),
+    [POI_COMBO] = COMBO(poi_combo, KC_EQUAL),
+    [PO_COMBO] = COMBO(po_combo, KC_BSLS),
+    [LS_COMBO] = COMBO(ls_combo, KC_QUOT),
+    [DS_COMBO] = COMBO(ds_combo, KC_GRAVE),
+    [GAME_MODE_COMBO] = COMBO(game_mode_combo, KC_GAME),
 };
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record)
 {
-    // Combos with index 0-3 are always active.
-    if (combo_index <= 3) {
+    if (combo_index <= MC_COMBO || combo_index == GAME_MODE_COMBO)
+    {
         return true;
     }
 
     // All other combos (index 4 and up) are only active on layer 1.
-    if (layer_state_is(1)) {
+    if (layer_state_is(1))
+    {
         return true;
     }
 
