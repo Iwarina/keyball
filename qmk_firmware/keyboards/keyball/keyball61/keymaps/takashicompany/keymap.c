@@ -30,7 +30,6 @@ enum custom_keycodes
     KC_TO_CLICKABLE_DEC,
     KC_SCROLL_DIR_V,
     KC_SCROLL_DIR_H,
-    KC_GAME,
 };
 
 enum click_state
@@ -78,49 +77,6 @@ int16_t mouse_move_count_ratio = 5;  // ポインターの動きを再生する�
 const uint16_t ignore_disable_mouse_layer_keys[] = {KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT, KC_RGUI, KC_RCTL, KC_RALT, KC_RSFT}; // この配列で指定されたキーはマウスレイヤー中に押下してもマウスレイヤーを解除しない
 
 int16_t mouse_movement;
-bool game_mode;
-
-bool process_game_mode_key(uint16_t keycode, keyrecord_t *record)
-{
-    if (!game_mode)
-    {
-        return true;
-    }
-
-    uint16_t replacement = KC_NO;
-
-    switch (keycode)
-    {
-    case MO(1):
-        replacement = KC_LSFT;
-        break;
-    case LT(1, KC_LNG2):
-        replacement = KC_LNG2;
-        break;
-    case LT(2, KC_SPC):
-        replacement = KC_SPC;
-        break;
-    case LT(3, KC_LNG1):
-        replacement = KC_LNG1;
-        break;
-    case LT(2, KC_ENT):
-        replacement = KC_ENT;
-        break;
-    default:
-        return true;
-    }
-
-    if (record->event.pressed)
-    {
-        register_code16(replacement);
-    }
-    else
-    {
-        unregister_code16(replacement);
-    }
-
-    return false;
-}
 
 void eeconfig_init_user(void)
 {
@@ -185,21 +141,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
 
     process_combo_event(keycode, record);
-
-    if (keycode == KC_GAME)
-    {
-        if (record->event.pressed)
-        {
-            game_mode = !game_mode;
-            clear_keyboard();
-        }
-        return false;
-    }
-
-    if (!process_game_mode_key(keycode, record))
-    {
-        return false;
-    }
 
     switch (keycode)
     {
@@ -506,7 +447,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, KC_MY_BTN2, KC_MY_SCR, KC_MY_BTN1, _______, _______, KC_MY_BTN1, KC_MY_SCR, KC_MY_BTN2, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)};
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______),
+
+    LAYOUT_universal(
+        KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS,
+        KC_DEL, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_INT3,
+        KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, S(KC_7),
+        KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_RBRC, KC_NUHS, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+        _______, KC_LCTL, KC_LALT, KC_LGUI, KC_LNG2, KC_SPC, KC_LNG1, KC_BSPC, KC_ENT, KC_LNG2, KC_RGUI, _______, KC_RALT, KC_PSCR)};
 #ifdef COMBO_ENABLE
 
 enum combo_names
@@ -521,7 +469,7 @@ enum combo_names
     PO_COMBO,
     LS_COMBO,
     DS_COMBO,
-    GAME_MODE_COMBO,
+    GAME_LAYER_COMBO,
 };
 
 // Define combo sequences in PROGMEM arrays
@@ -535,7 +483,7 @@ const uint16_t PROGMEM poi_combo[] = {KC_P, KC_O, KC_I, COMBO_END};
 const uint16_t PROGMEM po_combo[] = {KC_P, KC_O, COMBO_END};
 const uint16_t PROGMEM ls_combo[] = {KC_L, KC_SEMICOLON, COMBO_END};
 const uint16_t PROGMEM ds_combo[] = {KC_DOT, KC_SLASH, COMBO_END};
-const uint16_t PROGMEM game_mode_combo[] = {KC_LCTL, KC_LALT, KC_LGUI, COMBO_END};
+const uint16_t PROGMEM game_layer_combo[] = {KC_LCTL, KC_LALT, KC_LGUI, COMBO_END};
 
 combo_t key_combos[] = {
     [DF_COMBO] = COMBO(df_combo, KC_LNG2),
@@ -548,12 +496,12 @@ combo_t key_combos[] = {
     [PO_COMBO] = COMBO(po_combo, KC_BSLS),
     [LS_COMBO] = COMBO(ls_combo, KC_QUOT),
     [DS_COMBO] = COMBO(ds_combo, KC_GRAVE),
-    [GAME_MODE_COMBO] = COMBO(game_mode_combo, KC_GAME),
+    [GAME_LAYER_COMBO] = COMBO(game_layer_combo, TG(5)),
 };
 
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record)
 {
-    if (combo_index <= MC_COMBO || combo_index == GAME_MODE_COMBO)
+    if (combo_index <= MC_COMBO || combo_index == GAME_LAYER_COMBO)
     {
         return true;
     }
